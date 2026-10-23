@@ -1,44 +1,22 @@
-# js-yaml
+# js-yaml-go
 
-[![CI](https://github.com/nodeca/js-yaml/actions/workflows/ci.yml/badge.svg)](https://github.com/nodeca/js-yaml/actions/workflows/ci.yml)
-[![NPM version](https://img.shields.io/npm/v/js-yaml.svg)](https://www.npmjs.org/package/js-yaml)
+This is the Go 1.23 port of nodeca/js-yaml 5.5.0. It provides the `js-yaml`
+command for loading YAML as JSON and dumping JSON as YAML. The implementation
+is self-contained and uses no third-party Go modules.
 
-> YAML 1.2 parser and serializer for JavaScript.
+Build and test offline:
 
-__[Online demo](https://nodeca.github.io/js-yaml/)__
-
-- Supports the YAML 1.2 and YAML 1.1 specifications.
-- Passes the entire [YAML Test Suite](https://github.com/yaml/yaml-test-suite).
-
-
-### [Documentation >>](https://nodeca.github.io/js-yaml/doc/)
-
-
-##### Install
-
-```bash
-npm install js-yaml
+```sh
+go test ./...
+go build ./cmd/js-yaml
+printf 'answer: 42\n' | ./js-yaml load
+printf '{"answer":42}\n' | ./js-yaml dump
 ```
 
+Run `js-yaml load --all`, select a schema with `--schema`, or pass the dumper
+options listed in the migration instruction. Input defaults to standard input;
+a final path reads that UTF-8 file. Errors are printed to standard error.
 
-##### Usage
-
-```js
-import { load } from 'js-yaml'
-
-try {
-  const document = load('greeting: hello')
-  console.log(document.greeting)
-} catch (e) {
-  console.error(e)
-}
-```
-
-```js
-import { dump } from 'js-yaml'
-
-const source = dump({ greeting: 'hello' })
-console.log(source)
-```
-
-[More usage examples](docs/usage.md).
+The original js-yaml MIT license is in `LICENSE`. `internal/yaml/ORIGINS.md`
+retains the MIT and Apache-2.0 notices of the parser/emitter foundation adapted
+by this port.
